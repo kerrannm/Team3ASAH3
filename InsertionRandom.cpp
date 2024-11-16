@@ -91,17 +91,20 @@ void readData(int arr[])
 }
 timingResult timeAlgo(int arr[])
 {
+	//Allows for fractional capture of the seconds variable
+	typedef std::chrono::duration<double> frac;
+
 	//Start Timer
-	auto start = std::chrono::steady_clock::now();
+	auto start = std::chrono::high_resolution_clock::now();
 
 	//Perform algorithm
 	insertionSort(arr);  //   <--------   ALGORITHM HERE  !!!!!
 
 	//End Timer
-	auto end = std::chrono::steady_clock::now();
+	auto end = std::chrono::high_resolution_clock::now();
 
 	//capture the duration in the form of seconds, microseconds, and nanoseconds
-	auto sc = std::chrono::duration_cast<std::chrono::seconds>(end - start);
+	frac sc = end - start;
 	auto us = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 	auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
 
