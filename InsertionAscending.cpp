@@ -74,7 +74,7 @@ int main()
 void readData(int arr[])
 {
 	ifstream infile;
-	infile.open("AscendingOrder.txt");
+	infile.open(filename);
 
 	//i to iterate the index
 	int i = 0;
