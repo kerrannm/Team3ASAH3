@@ -33,6 +33,7 @@ struct timingResult
 timingResult timeAlgo(int[]);
 void printResults(timingResult&);
 void readData(int[]);
+int medianOfThree(int[], int, int);
 int partition(int[], int, int);
 void quickSortIterative(int[], int, int);
 
@@ -132,8 +133,34 @@ void printResults(timingResult& times)
 }
 
 /***********************************************************
-*      QUICK SORT UTILIZES THE TWO FOLLOWING FUNCTIONS
+*      QUICK SORT UTILIZES THE THREE FOLLOWING FUNCTIONS
 ************************************************************
+* Name: medianofThree
+* Parameters: int [], int, int
+* Returns: int
+* 	This function is meant to find a different pivot point
+* rather than always selecting the final index. This helps
+* to avoid any worst-case scenarios for time complexity, as
+* well as avoiding segmentation faults when sorting large
+* slices of the array.
+*   This was added after reaching segmentation faults when
+* using QuickSort at times of worst-complexity. The 
+* implementation itself comes from ChatGPT with editing 
+* to fit this specific program
+***********************************************************/
+int medianOfThree(int arr[], int low, int high)
+{
+    int mid = low + (high - low) / 2;
+
+    //Perform swaps between low, high, and mid to their respective spots
+    if (arr[low] > arr[mid]) swap(arr[low], arr[mid]);
+    if (arr[low] > arr[high]) swap(arr[low], arr[high]);
+    if (arr[mid] > arr[high]) swap(arr[mid], arr[high]);
+
+    return mid; // Return the pivot index
+}
+
+/************************************************************
 * SOURCE FOR THIS ALGORITHM:
 * https://www.geeksforgeeks.org/iterative-quick-sort/
 *
@@ -152,7 +179,8 @@ void printResults(timingResult& times)
 ***********************************************************/
 int partition(int arr[], int l, int h)
 {
-    int x = arr[h];
+    int pivotIndex = medianOfThree(arr, l, h);
+    int x = arr[pivotIndex];
     int i = (l - 1);
 
     for (int j = l; j <= h - 1; j++) {
@@ -169,7 +197,7 @@ int partition(int arr[], int l, int h)
 * SOURCE FOR THIS ALGORITHM:
 * https://www.geeksforgeeks.org/iterative-quick-sort/
 *
-* Name: quickSortIterative
+* Name: quickSort
 * Parameters: int [], int, int
 * Returns: void
 * 	This is a recursive function that will select ever-
