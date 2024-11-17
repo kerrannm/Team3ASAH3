@@ -118,12 +118,16 @@ timingResult timeAlgo(int arr[])
 * 	This function outputs the recorded timing from the 
 * algorithm into the terminal
 ***********************************************************/
-void printResults(timingResult &times)
+void printResults(timingResult& times)
 {
-    cout << filename << "   " << algType << '\n';
-    cout << setw(10) << right << times.sec << " seconds\n";
-    cout << setw(10) << right << times.microSec << " microseconds\n";
-    cout << setw(10) << right << times.nanoSec << " nanoseconds";
+	cout << "Time Elapsed While Sorting " << filename <<  " with " << algType << ":\n";
+	cout << "------------------------------------------------------------------------------\n";
+	cout << "Time elapsed in seconds:      " << setw(8) << right << times.sec << " seconds\n";
+	cout << "------------------------------------------------------------------------------\n";
+	cout << "Time elapsed in microseconds: " << setw(8) << right <<  times.microSec << " microseconds\n";
+	cout << "------------------------------------------------------------------------------\n";
+	cout << "Time elapsed in nanoseconds:  " << setw(8) << right << times.nanoSec << " nanoseconds\n";
+	cout << "------------------------------------------------------------------------------\n";
 }
 
 /***********************************************************
@@ -152,7 +156,7 @@ int medianOfThree(int arr[], int low, int high)
     return mid; // Return the pivot index
 }
 
-/************************************************************
+/***********************************************************
 * SOURCE FOR THIS ALGORITHM:
 * https://www.geeksforgeeks.org/cpp-program-for-quicksort/
 * 
@@ -170,43 +174,62 @@ int medianOfThree(int arr[], int low, int high)
 * different slice of the array. 
 ***********************************************************/
 int partition(int arr[], int low, int high) {
+
+    // NOTE: The next three lines are not from the original source, but have
+    //  been added to help avoid any worst-case scenarios by selecting a median
+    //  pivot point
     int pivotIndex = medianOfThree(arr, low, high);
     int pivot = arr[pivotIndex];
     swap(arr[pivotIndex], arr[high]);  // Move pivot to the end
 
-    int i = low - 1;
-    for (int j = low; j < high; j++) {
+    // Index of elemment just before the last element
+    // It is used for swapping
+    int i = (low - 1);
+
+	// Loop traverses array, comparing each value to pivot
+	// --If a value is found to be LESS THAN pivot, it is swapped with arr[i],
+	// 	 which is an incremented counter at the BEGININNING of the array
+    for (int j = low; j <= high - 1; j++) {
         if (arr[j] <= pivot) {
             i++;
             swap(arr[i], arr[j]);
         }
     }
 
+    // Put pivot to its position after finding each value LESS than pivot
     swap(arr[i + 1], arr[high]);
-    return i + 1;
+
+    // Return the point of partition
+    return (i + 1);
 }
-
-// /************************************************************
-// * SOURCE FOR THIS ALGORITHM:
-// * https://www.geeksforgeeks.org/cpp-program-for-quicksort/
-// * 
-// * Name: quickSort
-// * Parameters: int [], int, int
-// * Returns: void
-// * 	This is a recursive function that will select ever-
-// * shrinking slices of the array to be sorted through the
-// * partition() function. 
-// * 	quickSort() passes an array to partition(), which then 
-// * returns a more sorted array, as well as the correct index
-// * of the pivot (original parameter: 'high'). 
-// * 	Afterwards, quickSort is recursively applied to the 
-// * slices of the array on either side of the new pivot index
-// ***********************************************************/
+/************************************************************
+* SOURCE FOR THIS ALGORITHM:
+* https://www.geeksforgeeks.org/cpp-program-for-quicksort/
+* 
+* Name: quickSort
+* Parameters: int [], int, int
+* Returns: void
+* 	This is a recursive function that will select ever-
+* shrinking slices of the array to be sorted through the
+* partition() function. 
+* 	quickSort() passes an array to partition(), which then 
+* returns a more sorted array, as well as the correct index
+* of the pivot (original parameter: 'high'). 
+* 	Afterwards, quickSort is recursively applied to the 
+* slices of the array on either side of the new pivot index
+***********************************************************/
 void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);  // Get the partition index
 
-        // Recursively sort elements before and after partition
+    // Base case: This part will be executed till the starting
+    // index low is lesser than the ending index high
+    if (low < high) {
+
+        // pi is Partitioning Index, arr[p] is now at
+        // right place
+        int pi = partition(arr, low, high);
+
+        // Separately sort elements before and after the
+        // Partition Index pi
         quickSort(arr, low, pi - 1);
         quickSort(arr, pi + 1, high);
     }
