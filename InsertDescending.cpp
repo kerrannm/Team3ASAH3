@@ -40,7 +40,7 @@ using namespace std;
 //establish size for array
 const int SIZE = 65000;
 const string filename = "DescendingOrder.txt";
-const string algType = "Insertion Sort";
+const string algType = "Insert Sort";
 
 /*************************************
 * struct timingResult:
