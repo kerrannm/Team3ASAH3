@@ -1,9 +1,32 @@
 /*  Kerry Manolagas
-	Mervyn Harp
-	-Program will perform a sorting algorithm on a data set from a file
-	(File declared as global const 'filename')
-	-Before compiling, ensure all data files are within the same folder as this
-	source file                                                              */
+/Mervyn Harp
+/-Program will perform a sorting algorithm on a data set from a file
+/(File declared as global const 'filename'). After the 
+/ sorting algorithm has completed, the time elapsed while performing the
+/ sort will be displayed to the console in seconds, microseconds, and 
+/ nanoseconds. These values will only display fully elapsed units of 
+/ each time - fractional values of seconds and microseconds can be
+/ inferred by looking at smaller units of time displayed in the 
+/ results.
+/ 
+/ INSTRUCTIONS FOR RUNNING: This is one of six .cpps associated
+/ with this project! Only one main() will run at a time when 
+/ using Visual Studio. To ensure the succesful compilation
+/ of code, follow these steps:
+/
+/ 1. Go to the Solution Explorer (typically on righthand side)
+/ 2. Show all Files (icon should look like a few overlapping rectangles)
+/ 3. Once all of the associated with the .cpp are shown, right click 
+/ to either include or exclude a .cpp from executing. Only ONE
+/ .cpp should be included at a time - if a file is 
+/ included, the icon to the left of its name should appear as 
+/ two purple plus signs. If a file is excluded, the icon to the
+/ the left of its name will appear as a rectangle with a red
+/ circle with a white minus sign inside of it.
+/ 4. Repeat the process of inclusion/exclusion for each file
+/ that you wish to run.
+ 
+							       */
 
 #include <iostream>
 #include <fstream>
@@ -31,7 +54,7 @@ const string algType = "Insertion Sort";
 **************************************/
 struct timingResult
 {
-	double sec;
+	long long sec;
 	long long microSec;
 	long long nanoSec;
 };
