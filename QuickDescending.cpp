@@ -1,3 +1,31 @@
+/*  Kerry Manolagas
+/   Mervyn Harp
+/-Program will perform a sorting algorithm on a data set from a file
+/ (File declared as global const 'filename'). After the
+/ sorting algorithm has completed, the time elapsed while performing the
+/ sort will be displayed to the console in seconds, microseconds, and
+/ nanoseconds. These values will only display fully elapsed units of
+/ each time - fractional values of seconds and microseconds can be
+/ inferred by looking at smaller units of time displayed in the
+/ results.
+/
+/ INSTRUCTIONS FOR RUNNING: This is one of six .cpps associated
+/ with this project! Only one main() will run at a time when
+/ using Visual Studio. To ensure the succesful compilation
+/ of code, follow these steps:
+/
+/ 1. Go to the Solution Explorer (typically on righthand side)
+/ 2. Show all Files (icon should look like a few overlapping rectangles)
+/ 3. Once all of the associated with the .cpp are shown, right click
+/ to either include or exclude a .cpp from executing. Only ONE
+/ .cpp should be included at a time - if a file is
+/ included, the icon to the left of its name should appear as
+/ two purple plus signs. If a file is excluded, the icon to the
+/ the left of its name will appear as a rectangle with a red
+/ circle with a white minus sign inside of it.
+/ 4. Repeat the process of inclusion/exclusion for each file
+/ that you wish to run.                                          */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -33,7 +61,6 @@ struct timingResult
 timingResult timeAlgo(int[]);
 void printResults(timingResult&);
 void readData(int[]);
-int medianOfThree(int[], int, int);
 int partition(int[], int, int);
 void quickSortIterative(int[], int, int);
 
@@ -133,34 +160,8 @@ void printResults(timingResult& times)
 }
 
 /***********************************************************
-*      QUICK SORT UTILIZES THE THREE FOLLOWING FUNCTIONS
-************************************************************
-* Name: medianofThree
-* Parameters: int [], int, int
-* Returns: int
-* 	This function is meant to find a different pivot point
-* rather than always selecting the final index. This helps
-* to avoid any worst-case scenarios for time complexity, as
-* well as avoiding segmentation faults when sorting large
-* slices of the array.
-*   This was added after reaching segmentation faults when
-* using QuickSort at times of worst-complexity. The 
-* implementation itself comes from ChatGPT with editing 
-* to fit this specific program
-***********************************************************/
-int medianOfThree(int arr[], int low, int high)
-{
-    int mid = low + (high - low) / 2;
-
-    //Perform swaps between low, high, and mid to their respective spots
-    if (arr[low] > arr[mid]) swap(arr[low], arr[mid]);
-    if (arr[low] > arr[high]) swap(arr[low], arr[high]);
-    if (arr[mid] > arr[high]) swap(arr[mid], arr[high]);
-
-    return mid; // Return the pivot index
-}
-
-/************************************************************
+*      QUICK SORT UTILIZES THE TWO FOLLOWING FUNCTIONS
+*************************************************************
 * SOURCE FOR THIS ALGORITHM:
 * https://www.geeksforgeeks.org/iterative-quick-sort/
 *
@@ -179,8 +180,8 @@ int medianOfThree(int arr[], int low, int high)
 ***********************************************************/
 int partition(int arr[], int l, int h)
 {
-    int pivotIndex = medianOfThree(arr, l, h);
-    int x = arr[pivotIndex];
+    //int pivotIndex = medianOfThree(arr, l, h);
+    int x = arr[h];
     int i = (l - 1);
 
     for (int j = l; j <= h - 1; j++) {
@@ -200,32 +201,30 @@ int partition(int arr[], int l, int h)
 * Name: quickSort
 * Parameters: int [], int, int
 * Returns: void
-* 	This is a recursive function that will select ever-
-* shrinking slices of the array to be sorted through the
-* partition() function.
-* 	quickSort() passes an array to partition(), which then
-* returns a more sorted array, as well as the correct index
-* of the pivot (original parameter: 'high').
-* 	Afterwards, quickSort is recursively applied to the
-* slices of the array on either side of the new pivot index
+* 	This is a iterative version of QuickSort that allows
+* for sorting or larger data sets without fear of the
+* function-call exceeding the limits of the Stack.
+*   It accomplishes this by creating a dynamic array to be
+* used as a temporary stack that will hold the sorted
+* values to be then added back to the main array.
 ***********************************************************/
 void quickSortIterative(int arr[], int l, int h)
 {
     // Create an auxiliary stack 
-    int* stack = new int[h - l + 1];
+    int* tempStack = new int[h - l + 1];
 
     // initialize top of stack 
     int top = -1;
 
     // push initial values of l and h to stack 
-    stack[++top] = l;
-    stack[++top] = h;
+    tempStack[++top] = l;
+    tempStack[++top] = h;
 
     // Keep popping from stack while is not empty 
     while (top >= 0) {
         // Pop h and l 
-        h = stack[top--];
-        l = stack[top--];
+        h = tempStack[top--];
+        l = tempStack[top--];
 
         // Set pivot element at its correct position 
         // in sorted array 
@@ -234,15 +233,15 @@ void quickSortIterative(int arr[], int l, int h)
         // If there are elements on left side of pivot, 
         // then push left side to stack 
         if (p - 1 > l) {
-            stack[++top] = l;
-            stack[++top] = p - 1;
+            tempStack[++top] = l;
+            tempStack[++top] = p - 1;
         }
 
         // If there are elements on right side of pivot, 
         // then push right side to stack 
         if (p + 1 < h) {
-            stack[++top] = p + 1;
-            stack[++top] = h;
+            tempStack[++top] = p + 1;
+            tempStack[++top] = h;
         }
     }
 }
