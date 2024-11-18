@@ -10,20 +10,35 @@
 / results.
 / 
 / INSTRUCTIONS FOR RUNNING: This is one of six .cpps associated
-/ with this project! Only one main() will run at a time when 
-/ using Visual Studio. To ensure the succesful compilation
+/ with this assignment! As per the instructions, only .cpps,
+/ .txts, and a .docx are included in the zipped folder in which
+/ this file was found. Visual Studio requires a .sln to execute,
+/ so one must be created or repurposed in order to run any
+/ of the .cpp files. Additionally, Only one main() will run at a 
+/time when using Visual Studio. To ensure the succesful compilation
 / of code, follow these steps:
 /
-/ 1. Go to the Solution Explorer (typically on righthand side)
-/ 2. Show all Files (icon should look like a few overlapping rectangles)
-/ 3. Once all of the associated with the .cpp are shown, right click 
+/ 1. Create a new empty project in Visual Studio (or open an empty
+/ project that has been created for circumstances like this)
+/ 2. Go to the Solution Explorer (typically on righthand side)
+/ 3. Toggle Show all Files (icon should look like a few overlapping rectangles)
+/ until you can see folders that are labled such as Header Files, Resource Files,
+/ and Source Files.
+/ 4. Right click the Resource Files folder and Add > Existing Item for each 
+/ .txt file
+/ 5. Right click the Source Files folder and Add > Existing Item for each 
+/ .cpp file
+/ 6. Once all of the files are added, toggle Show all Files again. The
+/ previously mentioned folders should not be visible any more.
+/ 7. Once all of the associated with the .cpp are shown, right click 
 / to either include or exclude a .cpp from executing. Only ONE
 / .cpp should be included at a time - if a file is 
 / included, the icon to the left of its name should appear as 
 / two purple plus signs. If a file is excluded, the icon to the
 / the left of its name will appear as a rectangle with a red
 / circle with a white minus sign inside of it.
-/ 4. Repeat the process of inclusion/exclusion for each file
+/ 8. Once only one .cpp is included, you may run the program
+/ 9. Repeat the process of inclusion/exclusion for each file
 / that you wish to run.
  
 							       */
